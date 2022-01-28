@@ -22,7 +22,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-            primarySwatch: Colors.purple,
+            brightness: Brightness.dark,
+            primaryColor: Colors.black,
+            primarySwatch: Colors.blue,
             fontFamily: GoogleFonts.roboto().fontFamily),
         home: const HomePage(),
       ),
