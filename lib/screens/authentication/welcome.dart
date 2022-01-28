@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ticket_marketplace/screens/authentication/new_wallet.dart';
+import 'package:ticket_marketplace/widgets/appbar.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -10,15 +10,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff101018),
-      appBar: AppBar(
-        shadowColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        title: const Center(
-          child: Text(
-            "T A I B A W A L L E T",
-          ),
-        ),
-      ),
+      appBar: CustomAppbar(),
       body: SizedBox(
         width: double.infinity,
         child: Column(
@@ -33,7 +25,6 @@ class WelcomeScreen extends StatelessWidget {
             ),
             const Text(
               "Create new wallet or import your wallet",
-              style: TextStyle(fontSize: 20),
             ),
             Expanded(
               child: Container(),
