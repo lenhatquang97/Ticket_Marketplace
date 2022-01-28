@@ -37,6 +37,7 @@ dependencies:
   http: ^0.13.4
   path_provider: ^2.0.8
   provider: ^6.0.2
+  bip39: ^1.0.6
 
 dev_dependencies:
   flutter_lints: ^1.0.0

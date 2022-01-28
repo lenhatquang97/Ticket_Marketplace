@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_marketplace/provider/manage_page_screen.dart';
+import 'package:ticket_marketplace/screens/authentication/welcome.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,9 +25,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             brightness: Brightness.dark,
             primaryColor: Colors.black,
-            primarySwatch: Colors.blue,
-            fontFamily: GoogleFonts.roboto().fontFamily),
-        home: const HomePage(),
+            secondaryHeaderColor: const Color(0xff0057E9),
+            fontFamily: GoogleFonts.shareTech().fontFamily),
+        home: const WelcomeScreen(),
       ),
     );
   }
