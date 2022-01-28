@@ -23,31 +23,37 @@ class HomePage extends StatelessWidget {
       builder: (context, pageChange, _) => Scaffold(
         body: _widgetOptions.elementAt(pageChange.currentPage),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: const Color(0xff101018),
+          unselectedItemColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home_filled),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.trending_up_outlined),
+              activeIcon: Icon(Icons.trending_up),
               label: 'Stats',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search_outlined),
+              activeIcon: Icon(Icons.search),
               label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle_outlined),
+              activeIcon: Icon(Icons.account_circle),
               label: 'Profile',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.menu_outlined),
+              activeIcon: Icon(Icons.menu),
               label: 'More',
             )
           ],
           currentIndex: pageChange.currentPage,
-          selectedItemColor: Colors.blue[800],
           onTap: (val) {
             pageChange.currentPage = val;
           },
