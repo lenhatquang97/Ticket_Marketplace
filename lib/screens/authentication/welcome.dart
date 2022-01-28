@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ticket_marketplace/screens/authentication/new_wallet.dart';
+import 'package:lottie/lottie.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class WelcomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20),
             ),
             Expanded(
-              child: Container(),
+              child: Lottie.asset("assets/wallet.json"),
             ),
             InkWell(
                 child: Container(

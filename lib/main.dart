@@ -21,17 +21,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PageChange()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-            backgroundColor: const Color(0xff101018),
-            scaffoldBackgroundColor: const Color(0xff101018),
-            textTheme: Typography(platform: TargetPlatform.android).white,
-            primaryColor: const Color(0xff101018),
-            primarySwatch: buildMaterialColor(const Color(0xff0049e4)),
-            fontFamily: 'ShareTech'),
-        home: const HomePage(),
-      ),
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+              backgroundColor: const Color(0xff101018),
+              scaffoldBackgroundColor: const Color(0xff101018),
+              textTheme: Typography(platform: TargetPlatform.android).white,
+              primaryColor: const Color(0xff101018),
+              primarySwatch: buildMaterialColor(const Color(0xff0049e4)),
+              fontFamily: 'ShareTech'),
+          home: const HomePage()),
     );
   }
 }
