@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
       builder: (context, pageChange, _) => Scaffold(
         body: _widgetOptions.elementAt(pageChange.currentPage),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color(0xff101018),
+          backgroundColor: const Color(0xff0f0b27),
           unselectedItemColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           items: const [

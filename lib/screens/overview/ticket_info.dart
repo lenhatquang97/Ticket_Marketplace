@@ -43,7 +43,7 @@ class _TicketInfoState extends State<TicketInfo> {
                     size: 20,
                     color: Colors.green,
                   ),
-                  backgroundColor: Color(0xff0049e4),
+                  backgroundColor: const Color(0xff7c40a9),
                   label: Text(
                     "Concert",
                     style: TextStyle(color: Colors.white),
@@ -64,16 +64,27 @@ class _TicketInfoState extends State<TicketInfo> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                 ),
                 const SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xff0049e4)),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Buy now',
-                      style: TextStyle(fontSize: 20),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [Color(0xff7c40a9), Color(0xff730c99)])),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 15, bottom: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Buy now',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -88,7 +99,7 @@ class _TicketInfoState extends State<TicketInfo> {
                     ExpansionPanel(
                       canTapOnHeader: true,
                       isExpanded: stateExpand[0],
-                      backgroundColor: const Color(0xff0049e4),
+                      backgroundColor: const Color(0xff7c40a9),
                       headerBuilder: (context, isOpen) {
                         return const Padding(
                           padding: EdgeInsets.all(10.0),
@@ -106,7 +117,7 @@ class _TicketInfoState extends State<TicketInfo> {
                     ExpansionPanel(
                       canTapOnHeader: true,
                       isExpanded: stateExpand[1],
-                      backgroundColor: const Color(0xff0049e4),
+                      backgroundColor: const Color(0xff7c40a9),
                       headerBuilder: (context, isOpen) {
                         return const Padding(
                           padding: EdgeInsets.all(10.0),
@@ -125,7 +136,7 @@ class _TicketInfoState extends State<TicketInfo> {
                     ExpansionPanel(
                       canTapOnHeader: true,
                       isExpanded: stateExpand[2],
-                      backgroundColor: const Color(0xff0049e4),
+                      backgroundColor: const Color(0xff7c40a9),
                       headerBuilder: (context, isOpen) {
                         return const Padding(
                           padding: EdgeInsets.all(10.0),
