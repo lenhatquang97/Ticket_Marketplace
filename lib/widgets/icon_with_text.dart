@@ -5,8 +5,13 @@ class IconWithText extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String text;
+  final double fontSize;
   const IconWithText(
-      {Key? key, required this.icon, required this.text, required this.color})
+      {Key? key,
+      required this.icon,
+      required this.text,
+      required this.color,
+      this.fontSize = 16})
       : super(key: key);
 
   @override
@@ -19,7 +24,10 @@ class IconWithText extends StatelessWidget {
           color: color,
         ),
         const SizedBox(width: 5),
-        Text(text),
+        Text(
+          text,
+          style: TextStyle(fontSize: fontSize),
+        ),
       ],
     );
   }

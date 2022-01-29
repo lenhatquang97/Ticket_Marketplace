@@ -17,7 +17,7 @@ class ItemCard extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width / 2 - 10,
       child: Card(
-        color: const Color(0xff101018),
+        color: const Color(0xff0f0b27),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
           side: const BorderSide(
@@ -31,7 +31,7 @@ class ItemCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
-                color: const Color(0xff101018),
+                color: const Color(0xff0f0b27),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
@@ -50,14 +50,14 @@ class ItemCard extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              Chip(
-                avatar: const Icon(
+              const Chip(
+                avatar: Icon(
                   Icons.local_offer,
                   size: 20,
                   color: Colors.green,
                 ),
-                backgroundColor: const Color(0xff0049e4),
-                label: const Text(
+                backgroundColor: Color(0xff7c40a9),
+                label: Text(
                   "Concert",
                   style: TextStyle(color: Colors.white),
                 ),

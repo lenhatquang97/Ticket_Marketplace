@@ -13,7 +13,7 @@ class OverviewPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "TicketMarket",
+          "T A I B A W A L L E T",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
       ),
@@ -51,11 +51,14 @@ class OverviewPage extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => const TicketInfo()))
                       },
-                      child: const ItemCard(
-                        imageUrl:
-                            "https://lh3.googleusercontent.com/WwYd8uvCYPoNIFzENIqvaqWqHRBl82y3zSBNIiHor_529YFXMy_fT889BAWC987Kb3qLahffUNOb7rPFsZM3CC7C=s0",
-                        title: "Flirty Bear On the ground of the king",
-                        location: "Vietnam",
+                      child: const Hero(
+                        tag: 'test1',
+                        child: ItemCard(
+                          imageUrl:
+                              "https://lh3.googleusercontent.com/WwYd8uvCYPoNIFzENIqvaqWqHRBl82y3zSBNIiHor_529YFXMy_fT889BAWC987Kb3qLahffUNOb7rPFsZM3CC7C=s0",
+                          title: "Flirty Bear",
+                          location: "Vietnam",
+                        ),
                       ),
                     ),
                     ItemCard(
