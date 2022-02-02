@@ -7,7 +7,9 @@ class NewWallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
     );
   }
 }
