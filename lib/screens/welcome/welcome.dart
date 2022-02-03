@@ -63,15 +63,13 @@ class WelcomeScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Color(0xff0049e4),
                       borderRadius: BorderRadius.circular(29)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     child: Center(
                         child: Text(
                       "Create New Wallet",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor),
+                          fontWeight: FontWeight.bold, color: Colors.white),
                     )),
                   )),
             ),

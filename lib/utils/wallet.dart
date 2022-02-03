@@ -26,10 +26,11 @@ encrypt.Encrypted EncryptPrivateKey(String privateKey, String password) {
   final fernet = encrypt.Fernet(keyFernet);
   final encrypter = encrypt.Encrypter(fernet);
   final encrypted = encrypter.encrypt(privateKey);
+  print(encrypted.bytes.toString());
   return encrypted;
 }
 
-void DecryptPrivateKey(hashedPrivateKey, String password) {
+String DecryptPrivateKey(hashedPrivateKey, String password) {
   while (password.length < 32) {
     password = password + 'k';
   }
@@ -37,5 +38,10 @@ void DecryptPrivateKey(hashedPrivateKey, String password) {
   final fernet = encrypt.Fernet(keyFernet);
   final encrypter = encrypt.Encrypter(fernet);
   final decrypted = encrypter.decrypt(hashedPrivateKey);
-  print(decrypted.toString());
+
+  return decrypted.toString();
+}
+
+String Signature(String hashedMsg, String password) {
+
 }
