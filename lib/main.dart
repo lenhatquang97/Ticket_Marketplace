@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/provider/manage_page_screen.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ticket_marketplace/utils/color_func.dart';
+import 'package:ticket_marketplace/utils/wallet.dart';
 
-void main() {
+import 'screens/welcome/welcome.dart';
+
+Future<void> main() async {
   runApp(const MyApp());
 }
 
@@ -21,6 +26,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PageChange()),
       ],
       child: MaterialApp(
+
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -35,7 +41,7 @@ class MyApp extends StatelessWidget {
             primaryColor: backgroundColor,
             primarySwatch: buildMaterialColor(blueCustom),
             fontFamily: GoogleFonts.lato().fontFamily),
-        home: const HomePage(),
+        home: const WelcomeScreen(),
       ),
     );
   }
