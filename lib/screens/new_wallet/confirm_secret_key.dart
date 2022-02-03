@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_marketplace/models/wallet.dart';
+import 'package:ticket_marketplace/widgets/appbar.dart';
 
 class ConfirmSecretKey extends StatefulWidget {
-  const ConfirmSecretKey({Key? key, required this.password, required this.wallet}) : super(key: key);
+  const ConfirmSecretKey(
+      {Key? key, required this.password, required this.wallet})
+      : super(key: key);
 
   final String password;
   final Wallet wallet;
@@ -12,13 +15,12 @@ class ConfirmSecretKey extends StatefulWidget {
 }
 
 class _ConfirmSecretKeyState extends State<ConfirmSecretKey> {
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
+      appBar: CustomAppbar(),
       body: Column(
         children: [
           const SizedBox(
@@ -41,6 +43,22 @@ class _ConfirmSecretKeyState extends State<ConfirmSecretKey> {
               )),
             ),
           ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            width: MediaQuery.of(context).size.width,
+            child: TextFormField(
+              controller: controller,
+              maxLines: 6,
+              style: const TextStyle(color: Colors.black, fontSize: 16),
+              decoration: InputDecoration(
+                  errorStyle: const TextStyle(fontWeight: FontWeight.bold),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  fillColor: Colors.white,
+                  filled: true),
+            ),
+          ),
           Expanded(child: Container()),
           InkWell(
             onTap: () {
@@ -52,15 +70,13 @@ class _ConfirmSecretKeyState extends State<ConfirmSecretKey> {
                 decoration: BoxDecoration(
                     color: Color(0xff0049e4),
                     borderRadius: BorderRadius.circular(29)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20, horizontal: 20),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   child: Center(
                       child: Text(
-                        "Confirm",
+                    "Confirm",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor),
+                        fontWeight: FontWeight.bold, color: Colors.white),
                   )),
                 )),
           ),

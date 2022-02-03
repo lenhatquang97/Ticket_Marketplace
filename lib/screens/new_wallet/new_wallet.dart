@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_marketplace/screens/new_wallet/show_secretkey.dart';
 import 'package:ticket_marketplace/utils/wallet.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
+import 'package:ticket_marketplace/widgets/password_indicator.dart';
 
 class NewWallet extends StatefulWidget {
   const NewWallet({Key? key}) : super(key: key);
@@ -14,14 +15,13 @@ class _NewWalletState extends State<NewWallet> {
   final newPassword = TextEditingController(text: "");
   final confirmPassword = TextEditingController(text: "");
   static final formKey = GlobalKey<FormState>();
+  String tmpPwd = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
+      appBar: CustomAppbar(),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -51,6 +51,11 @@ class _NewWalletState extends State<NewWallet> {
               child: Column(
                 children: [
                   PasswordField(
+                    onChanged: (val) {
+                      setState(() {
+                        tmpPwd = val;
+                      });
+                    },
                     controller: newPassword,
                     lable: "New password (min 8 chars)",
                     validator: (value) {
@@ -63,7 +68,23 @@ class _NewWalletState extends State<NewWallet> {
                   const SizedBox(
                     height: 20,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        const Text("Strength:"),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(child: PasswordIndicator(pwd: tmpPwd))
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   PasswordField(
+                    onChanged: (val) {},
                     controller: confirmPassword,
                     lable: "Confirm password",
                     validator: (value) {
@@ -94,15 +115,13 @@ class _NewWalletState extends State<NewWallet> {
                   decoration: BoxDecoration(
                       color: const Color(0xff2964e3),
                       borderRadius: BorderRadius.circular(29)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     child: Center(
                         child: Text(
                       "Create",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor),
+                          fontWeight: FontWeight.bold, color: Colors.white),
                     )),
                   )),
             ),
@@ -116,17 +135,21 @@ class _NewWalletState extends State<NewWallet> {
   }
 }
 
+typedef StringVoidCallback = Function(String);
+
 class PasswordField extends StatelessWidget {
-  const PasswordField({
-    Key? key,
-    required this.lable,
-    this.controller,
-    this.validator,
-  }) : super(key: key);
+  const PasswordField(
+      {Key? key,
+      required this.lable,
+      this.controller,
+      this.validator,
+      required this.onChanged})
+      : super(key: key);
 
   final String lable;
   final controller;
   final validator;
+  final StringVoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -134,8 +157,8 @@ class PasswordField extends StatelessWidget {
       children: [
         Row(
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.1,
+            const SizedBox(
+              width: 20,
             ),
             Text(lable),
           ],
@@ -145,16 +168,21 @@ class PasswordField extends StatelessWidget {
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          width: MediaQuery.of(context).size.width * 0.8,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5), color: Colors.white),
+          width: MediaQuery.of(context).size.width,
           child: TextFormField(
             controller: controller,
             validator: validator,
+            onChanged: onChanged,
             obscureText: true,
             obscuringCharacter: "*",
             style: const TextStyle(color: Colors.black, fontSize: 16),
-            decoration: const InputDecoration(border: InputBorder.none),
+            decoration: InputDecoration(
+                errorStyle: const TextStyle(fontWeight: FontWeight.bold),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                fillColor: Colors.white,
+                filled: true),
           ),
         )
       ],
