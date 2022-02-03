@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ticket_marketplace/screens/authentication/new_wallet.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
+
+import '../new_wallet/new_wallet.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

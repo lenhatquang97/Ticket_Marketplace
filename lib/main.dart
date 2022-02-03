@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ticket_marketplace/provider/manage_page_screen.dart';
-import 'package:ticket_marketplace/screens/authentication/welcome.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
 import 'package:provider/provider.dart';
 import 'package:ticket_marketplace/utils/color_func.dart';
-import 'package:bip39/bip39.dart' as bip39;
+import 'package:ticket_marketplace/utils/wallet.dart';
+
+import 'screens/welcome/welcome.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
