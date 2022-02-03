@@ -28,17 +28,17 @@ class FromToHistory extends StatelessWidget {
             ),
             const Text(
               "Transfer",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const Spacer(),
             Text(
               timeStamp,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
         ),
-        Text("From: $fromWallet", style: const TextStyle(fontSize: 18)),
-        Text("To: $toWallet", style: const TextStyle(fontSize: 18)),
+        Text("From: $fromWallet"),
+        Text("To: $toWallet"),
         const SizedBox(
           height: 10,
         )

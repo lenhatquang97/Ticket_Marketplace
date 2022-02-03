@@ -35,9 +35,11 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   font_awesome_flutter: ^9.2.0
   google_fonts: ^2.2.0
+  googleapis: ^7.0.0
   http: ^0.13.4
   path_provider: ^2.0.8
   provider: ^6.0.2
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -70,6 +72,5 @@ flutter:
     - family: ShareTech
       fonts:
         - asset: assets/fonts/ShareTech-Regular.ttf
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
