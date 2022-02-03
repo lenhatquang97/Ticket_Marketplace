@@ -121,20 +121,24 @@ class Ticket extends StatelessWidget {
                   ),
                 ],
               ),
-              Center(
-                child: Image.network(
-                  sampleImgUrl,
-                  width: ticketWidth,
-                  height: ticketHeight / 3,
+              Expanded(
+                child: Center(
+                  child: Image.network(
+                    sampleImgUrl,
+                    width: ticketWidth,
+                    height: ticketHeight / 3,
+                  ),
                 ),
               ),
               const MySeparator(),
               const SizedBox(height: 10),
-              Center(
-                child: QrImage(
-                  data: "flirtybears.com",
-                  version: QrVersions.auto,
-                  size: ticketWidth / 2,
+              Expanded(
+                child: Center(
+                  child: QrImage(
+                    data: "flirtybears.com",
+                    version: QrVersions.auto,
+                    size: ticketWidth / 2,
+                  ),
                 ),
               ),
               const SizedBox(
