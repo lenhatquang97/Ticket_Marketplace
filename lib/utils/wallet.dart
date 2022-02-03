@@ -42,6 +42,6 @@ String DecryptPrivateKey(hashedPrivateKey, String password) {
   return decrypted.toString();
 }
 
-String Signature(String hashedMsg, String password) {
+// String Signature(String hashedMsg, String password) {
 
-}
+// }
