@@ -18,55 +18,59 @@ class ItemCard extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width / 2 - 10,
       child: Card(
-        color: backgroundColor,
+        color: const Color(0xff252525),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
-          side: const BorderSide(
-            color: Colors.grey,
-            width: 1.0,
-          ),
         ),
         child: FittedBox(
           fit: BoxFit.contain,
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Card(
-                  color: backgroundColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Image.network(
-                    imageUrl,
-                    width: MediaQuery.of(context).size.width / 2,
-                    height: MediaQuery.of(context).size.height / 3,
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Card(
+                color: backgroundColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
-                const SizedBox(
-                  height: 5,
+                child: Image.network(
+                  imageUrl,
+                  width: MediaQuery.of(context).size.width / 2,
+                  height: MediaQuery.of(context).size.height / 3,
                 ),
-                Text(title,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18)),
-                const SizedBox(
-                  height: 5,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18)),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Chip(
+                      backgroundColor: blueCustom,
+                      label: Text(
+                        "Concert",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    IconWithText(
+                        icon: Icons.place, color: Colors.red, text: location),
+                  ],
                 ),
-                const Chip(
-                  backgroundColor: blueCustom,
-                  label: Text(
-                    "Concert",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                IconWithText(
-                    icon: Icons.place, color: Colors.red, text: location)
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
           ),
         ),
       ),

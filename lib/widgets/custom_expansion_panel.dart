@@ -78,7 +78,7 @@ class CustomExpansionPanelList extends StatelessWidget {
           key: _SaltedKey<BuildContext, int>(context, index * 2),
           margin: const EdgeInsets.only(top: 5, bottom: 5),
           child: Material(
-            color: blueCustom,
+            color: const Color(0xff151515),
             elevation: 2.0,
             borderRadius: BorderRadius.all(Radius.circular(_radiusValue)),
             child: Column(

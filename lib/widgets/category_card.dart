@@ -15,10 +15,6 @@ class CategoryCard extends StatelessWidget {
               clipBehavior: Clip.antiAliasWithSaveLayer,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
-                side: const BorderSide(
-                  color: Colors.grey,
-                  width: 1.0,
-                ),
               ),
               child: Stack(
                 children: [

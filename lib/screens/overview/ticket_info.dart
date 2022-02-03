@@ -41,6 +41,9 @@ class _TicketInfoState extends State<TicketInfo> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 const Chip(
                   backgroundColor: blueCustom,
                   label: Text(
@@ -60,7 +63,6 @@ class _TicketInfoState extends State<TicketInfo> {
                       icon: Icons.place,
                       text: "1st District, Ho Chi Minh City",
                       color: Colors.red,
-                      fontSize: 20,
                     )),
                 const SizedBox(height: 10),
                 Container(
@@ -107,7 +109,7 @@ class _TicketInfoState extends State<TicketInfo> {
                           padding: EdgeInsets.all(10.0),
                           child: Text("Location",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25)),
+                                  fontWeight: FontWeight.bold, fontSize: 20)),
                         );
                       },
                       body: const Padding(
@@ -125,14 +127,16 @@ class _TicketInfoState extends State<TicketInfo> {
                           padding: EdgeInsets.all(10.0),
                           child: Text("Description",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25)),
+                                  fontWeight: FontWeight.bold, fontSize: 20)),
                         );
                       },
                       body: const Padding(
-                        padding: EdgeInsets.all(10),
+                        padding:
+                            EdgeInsets.only(bottom: 20, left: 20, right: 20),
                         child: Text(
-                            "He ordered his regular breakfast. Two eggs sunnyside up, hash browns, and two strips of bacon. He continued to look at the menu wondering if this would be the day he added something new. This was also part of the routine. A few seconds of hesitation to see if something else would be added to the order before demuring and saying that would be all. It was the same exact meal that he had ordered every day for the past two years.",
-                            style: TextStyle(fontSize: 20)),
+                          "He ordered his regular breakfast. Two eggs sunnyside up, hash browns, and two strips of bacon. He continued to look at the menu wondering if this would be the day he added something new. This was also part of the routine. A few seconds of hesitation to see if something else would be added to the order before demuring and saying that would be all. It was the same exact meal that he had ordered every day for the past two years.",
+                          textAlign: TextAlign.justify,
+                        ),
                       ),
                     ),
                     ExpansionPanel(
@@ -144,7 +148,7 @@ class _TicketInfoState extends State<TicketInfo> {
                           padding: EdgeInsets.all(10.0),
                           child: Text("History",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25)),
+                                  fontWeight: FontWeight.bold, fontSize: 20)),
                         );
                       },
                       body: Container(

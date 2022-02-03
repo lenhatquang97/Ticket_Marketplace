@@ -26,10 +26,15 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             backgroundColor: backgroundColor,
             scaffoldBackgroundColor: backgroundColor,
-            textTheme: Typography(platform: TargetPlatform.android).white,
+            textTheme: ThemeData.dark()
+                .textTheme
+                .apply(fontFamily: GoogleFonts.lato().fontFamily),
+            primaryTextTheme: ThemeData.dark()
+                .textTheme
+                .apply(fontFamily: GoogleFonts.lato().fontFamily),
             primaryColor: backgroundColor,
             primarySwatch: buildMaterialColor(blueCustom),
-            fontFamily: GoogleFonts.openSans().fontFamily),
+            fontFamily: GoogleFonts.lato().fontFamily),
         home: const HomePage(),
       ),
     );
