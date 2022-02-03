@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/provider/manage_page_screen.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
 import 'package:provider/provider.dart';
@@ -23,12 +24,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-            backgroundColor: const Color(0xff0f0b27),
-            scaffoldBackgroundColor: const Color(0xff0f0b27),
+            backgroundColor: backgroundColor,
+            scaffoldBackgroundColor: backgroundColor,
             textTheme: Typography(platform: TargetPlatform.android).white,
-            primaryColor: const Color(0xff0f0b27),
-            primarySwatch: buildMaterialColor(const Color(0xff7c40a9)),
-            fontFamily: 'ShareTech'),
+            primaryColor: backgroundColor,
+            primarySwatch: buildMaterialColor(blueCustom),
+            fontFamily: GoogleFonts.openSans().fontFamily),
         home: const HomePage(),
       ),
     );

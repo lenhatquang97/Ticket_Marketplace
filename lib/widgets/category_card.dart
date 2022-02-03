@@ -34,7 +34,7 @@ class CategoryCard extends StatelessWidget {
                       child: Text(
                         "Concert",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       )),
                 ],
               ))
