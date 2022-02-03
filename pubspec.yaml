@@ -39,11 +39,12 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   font_awesome_flutter: ^9.2.0
   google_fonts: ^2.2.0
+  googleapis: ^7.0.0
   http: ^0.13.4
   lottie: ^1.2.1
   path_provider: ^2.0.8
   provider: ^6.0.2
-  secp256k1: ^0.3.0
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0

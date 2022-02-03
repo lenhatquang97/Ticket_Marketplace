@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/provider/manage_page_screen.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
 import 'package:provider/provider.dart';
@@ -25,16 +26,23 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PageChange()),
       ],
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-              backgroundColor: const Color(0xff101018),
-              scaffoldBackgroundColor: const Color(0xff101018),
-              textTheme: Typography(platform: TargetPlatform.android).white,
-              primaryColor: const Color(0xff101018),
-              primarySwatch: buildMaterialColor(const Color(0xff0049e4)),
-              fontFamily: GoogleFonts.shareTech().fontFamily),
-          home: const WelcomeScreen()),
+
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+            backgroundColor: backgroundColor,
+            scaffoldBackgroundColor: backgroundColor,
+            textTheme: ThemeData.dark()
+                .textTheme
+                .apply(fontFamily: GoogleFonts.lato().fontFamily),
+            primaryTextTheme: ThemeData.dark()
+                .textTheme
+                .apply(fontFamily: GoogleFonts.lato().fontFamily),
+            primaryColor: backgroundColor,
+            primarySwatch: buildMaterialColor(blueCustom),
+            fontFamily: GoogleFonts.lato().fontFamily),
+        home: const WelcomeScreen(),
+      ),
     );
   }
 }

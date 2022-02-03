@@ -1,19 +1,21 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:ticket_marketplace/constants/sample_data.dart';
 import 'package:ticket_marketplace/screens/overview/ticket_info.dart';
 import 'package:ticket_marketplace/widgets/category_card.dart';
 import 'package:ticket_marketplace/widgets/item_card.dart';
+import 'package:ticket_marketplace/widgets/ticket_shape.dart';
 
 class OverviewPage extends StatelessWidget {
   const OverviewPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "TicketMarket",
+          "T A I B A W A L L E T",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
       ),
@@ -21,12 +23,13 @@ class OverviewPage extends StatelessWidget {
         child: Container(
             padding: const EdgeInsets.all(5),
             child: ListView(
+              shrinkWrap: true,
               children: [
                 const Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     "Categories",
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
+                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
                   ),
                 ),
                 CarouselSlider(
@@ -37,7 +40,7 @@ class OverviewPage extends StatelessWidget {
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     "All items",
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
+                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
                   ),
                 ),
                 Wrap(
@@ -51,31 +54,30 @@ class OverviewPage extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => const TicketInfo()))
                       },
-                      child: const ItemCard(
-                        imageUrl:
-                            "https://lh3.googleusercontent.com/WwYd8uvCYPoNIFzENIqvaqWqHRBl82y3zSBNIiHor_529YFXMy_fT889BAWC987Kb3qLahffUNOb7rPFsZM3CC7C=s0",
-                        title: "Flirty Bear On the ground of the king",
-                        location: "Vietnam",
+                      child: const Hero(
+                        tag: 'test1',
+                        child: ItemCard(
+                          imageUrl: sampleImgUrl,
+                          title: "Flirty Bear",
+                          location: "Vietnam",
+                        ),
                       ),
                     ),
-                    ItemCard(
-                      imageUrl:
-                          "https://lh3.googleusercontent.com/WwYd8uvCYPoNIFzENIqvaqWqHRBl82y3zSBNIiHor_529YFXMy_fT889BAWC987Kb3qLahffUNOb7rPFsZM3CC7C=s0",
+                    const ItemCard(
+                      imageUrl: sampleImgUrl,
                       title: "Flirty Bear",
                       location: "Vietnam",
                     ),
-                    ItemCard(
-                      imageUrl:
-                          "https://lh3.googleusercontent.com/WwYd8uvCYPoNIFzENIqvaqWqHRBl82y3zSBNIiHor_529YFXMy_fT889BAWC987Kb3qLahffUNOb7rPFsZM3CC7C=s0",
+                    const ItemCard(
+                      imageUrl: sampleImgUrl,
                       title: "Flirty Bear",
                       location: "Vietnam",
                     ),
-                    ItemCard(
-                      imageUrl:
-                          "https://lh3.googleusercontent.com/WwYd8uvCYPoNIFzENIqvaqWqHRBl82y3zSBNIiHor_529YFXMy_fT889BAWC987Kb3qLahffUNOb7rPFsZM3CC7C=s0",
+                    const ItemCard(
+                      imageUrl: sampleImgUrl,
                       title: "Flirty Bear",
                       location: "Vietnam",
-                    ),
+                    )
                   ],
                 ),
               ],
