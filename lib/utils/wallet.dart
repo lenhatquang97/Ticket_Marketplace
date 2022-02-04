@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:ticket_marketplace/models/wallet.dart';
 import 'dart:convert';
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:ticket_marketplace/utils/user_storage.dart';
 
 Wallet CreateNewWallet(String password) {
   var ec = getP256();
@@ -42,13 +43,17 @@ String DecryptPrivateKey(hashedPrivateKey, String password) {
   return decrypted.toString();
 }
 
-// String Signature(String hashedMsg, String password) {
-//   // sha256 msg
-//   var msg = utf8.encode(hashedMsg);
-//   var msgHash = sha256.convert(msg).toString();
+Future<Signature> SignMsg(String msg) async {
+  var msgEncoded = utf8.encode(msg);
+  var msgHash = sha256.convert(msgEncoded).toString();
 
-//   // convert to buffer
-//   var hash = List<int>.generate(msgHash.length ~/ 2,
-//       (i) => int.parse(msgHash.substring(i * 2, i * 2 + 2), radix: 16));
-//   return signature(msgHash, hash);
-// }
+  // convert to buffer
+  var hash = List<int>.generate(msgHash.length ~/ 2,
+      (i) => int.parse(msgHash.substring(i * 2, i * 2 + 2), radix: 16));
+
+  // sign
+  final priv = await SecureStorage.readSecureData('privateKey');
+  var ec = getP256();
+  var sig = signature(PrivateKey.fromBytes(ec, base64.decode(priv)), hash);
+  return sig;
+}

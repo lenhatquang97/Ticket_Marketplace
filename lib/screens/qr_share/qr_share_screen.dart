@@ -3,7 +3,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class QrShareScreen extends StatelessWidget {
   const QrShareScreen({Key? key}) : super(key: key);
-
+  final String tmpPub =
+      "046f3f9a0c6ca20d526d4414ddb21d2798c3976739310170214a984fc0319588f1d63169f9079af8afc331ed8813e57343440b7a2457004d6d11b43d3f68b5dfca";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +29,10 @@ class QrShareScreen extends StatelessWidget {
               ),
             ),
             const Text("Your public key:"),
-            const Padding(
-              padding: EdgeInsets.all(20.0),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Text(
-                "04165f8d4a634bb17f847e8d084a0fd09698ada5fadc91c0efa8d8c048b8028b7c5e3a12066c7ebc6ab9cda3785392d7cc4f49cc945e6f7787785ad7f49cba9449",
+                tmpPub,
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -39,8 +40,7 @@ class QrShareScreen extends StatelessWidget {
               child: Container(
                 color: Colors.white,
                 child: QrImage(
-                  data:
-                      "04165f8d4a634bb17f847e8d084a0fd09698ada5fadc91c0efa8d8c048b8028b7c5e3a12066c7ebc6ab9cda3785392d7cc4f49cc945e6f7787785ad7f49cba9449",
+                  data: tmpPub,
                   version: QrVersions.auto,
                   size: MediaQuery.of(context).size.width - 40,
                 ),

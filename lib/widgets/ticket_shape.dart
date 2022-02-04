@@ -3,7 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/constants/sample_data.dart';
+import 'package:ticket_marketplace/screens/profile/confirm_sharing.dart';
 import 'package:ticket_marketplace/screens/qr_share/qr_share_screen.dart';
+import 'package:ticket_marketplace/utils/wallet.dart';
 import 'package:ticket_marketplace/widgets/dashed_line.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 
@@ -27,6 +29,10 @@ class Ticket extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     final ticketWidth = screenSize.width;
     final ticketHeight = screenSize.height - margin * 4;
+
+    //Hard-code
+    final txOutId =
+        "609d2edf125ea7ca6459a9aff93bd7085d3fd508506d3b84dd504e64d330653f";
     return Container(
       width: ticketWidth,
       height: ticketHeight,
@@ -152,7 +158,18 @@ class Ticket extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () async {
                     var result = await BarcodeScanner.scan();
-                    print(result.rawContent);
+                    if (result.type == ResultType.Barcode) {
+                      final signaturer = await SignMsg(txOutId);
+                      print(result.rawContent);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ConfirmSharing(
+                                receiverPublicId: result.rawContent,
+                                txOutId: txOutId,
+                                signaturer: signaturer)),
+                      );
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
