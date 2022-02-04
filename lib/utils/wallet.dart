@@ -43,5 +43,12 @@ String DecryptPrivateKey(hashedPrivateKey, String password) {
 }
 
 // String Signature(String hashedMsg, String password) {
+//   // sha256 msg
+//   var msg = utf8.encode(hashedMsg);
+//   var msgHash = sha256.convert(msg).toString();
 
+//   // convert to buffer
+//   var hash = List<int>.generate(msgHash.length ~/ 2,
+//       (i) => int.parse(msgHash.substring(i * 2, i * 2 + 2), radix: 16));
+//   return signature(msgHash, hash);
 // }

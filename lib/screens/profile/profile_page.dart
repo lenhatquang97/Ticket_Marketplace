@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/screens/profile/your_ticket.dart';
+import 'package:ticket_marketplace/screens/qr_share/qr_share_screen.dart';
+import 'package:ticket_marketplace/widgets/appbar.dart';
 import 'package:ticket_marketplace/widgets/profile/field_button.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -10,6 +12,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppbar(),
       body: SafeArea(
           child: Container(
         padding: const EdgeInsets.all(5),
@@ -40,8 +43,12 @@ class ProfilePage extends StatelessWidget {
             ),
             FieldButton(
               icon: FontAwesomeIcons.qrcode,
-              text: "Scan QR code",
-              onPressed: () {},
+              text: "Share your QR Code",
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const QrShareScreen();
+                }));
+              },
             ),
             FieldButton(
               icon: FontAwesomeIcons.infoCircle,

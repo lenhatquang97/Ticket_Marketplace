@@ -3,8 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/constants/sample_data.dart';
-import 'package:ticket_marketplace/screens/profile/qr_share_screen.dart';
+import 'package:ticket_marketplace/screens/qr_share/qr_share_screen.dart';
 import 'package:ticket_marketplace/widgets/dashed_line.dart';
+import 'package:barcode_scan2/barcode_scan2.dart';
 
 class Ticket extends StatelessWidget {
   final double margin;
@@ -149,11 +150,9 @@ class Ticket extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10), color: blueCustom),
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => QrShareScreen()));
+                  onTap: () async {
+                    var result = await BarcodeScanner.scan();
+                    print(result.rawContent);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
