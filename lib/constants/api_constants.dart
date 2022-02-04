@@ -1,3 +1,3 @@
 const baseSite = "http://34.71.245.146/";
 
-const getAllTickets = baseSite + "uxto";
+const getAllTickets = 'https://test-mobilefn.herokuapp.com/api/v1/ticket';

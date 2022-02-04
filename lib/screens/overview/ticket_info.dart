@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
@@ -6,7 +5,6 @@ import 'package:ticket_marketplace/constants/sample_data.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
 import 'package:ticket_marketplace/widgets/custom_expansion_panel.dart';
 import 'package:ticket_marketplace/widgets/from_to_history.dart';
-import 'package:ticket_marketplace/widgets/icon_with_text.dart';
 import 'package:ticket_marketplace/widgets/icon_with_text_custom.dart';
 
 class TicketInfo extends StatefulWidget {
@@ -47,13 +45,13 @@ class _TicketInfoState extends State<TicketInfo> {
                 Chip(
                   backgroundColor: blueCustom,
                   label: Text(
-                    widget.model.data.category,
+                    widget.model.category,
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
-                  child: Text(widget.model.data.name,
+                  child: Text(widget.model.name,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20)),
                 ),
@@ -61,7 +59,7 @@ class _TicketInfoState extends State<TicketInfo> {
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: IconWithTextCustom(
                       icon: Icons.place,
-                      text: widget.model.data.location,
+                      text: widget.model.location,
                       color: Colors.red,
                     )),
                 const SizedBox(height: 10),
@@ -134,7 +132,7 @@ class _TicketInfoState extends State<TicketInfo> {
                         padding: const EdgeInsets.only(
                             bottom: 20, left: 20, right: 20),
                         child: Text(
-                          widget.model.data.description,
+                          widget.model.description,
                           textAlign: TextAlign.justify,
                         ),
                       ),

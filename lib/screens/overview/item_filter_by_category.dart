@@ -6,30 +6,28 @@ import 'package:ticket_marketplace/bloc/categories_bloc.dart';
 import 'package:ticket_marketplace/bloc/ticket_bloc.dart';
 import 'package:ticket_marketplace/constants/sample_data.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
-import 'package:ticket_marketplace/screens/overview/item_filter_by_category.dart';
 import 'package:ticket_marketplace/screens/overview/ticket_info.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
 import 'package:ticket_marketplace/widgets/category_card.dart';
 import 'package:ticket_marketplace/widgets/item_card.dart';
 import 'package:http/http.dart' as http;
 
-class OverviewPage extends StatefulWidget {
-  OverviewPage({Key? key}) : super(key: key);
+class FilterByCategory extends StatefulWidget {
+  final String category;
+  const FilterByCategory({Key? key, required this.category}) : super(key: key);
 
   @override
-  State<OverviewPage> createState() => _OverviewPageState();
+  State<FilterByCategory> createState() => _FilterByCategoryState();
 }
 
-class _OverviewPageState extends State<OverviewPage> {
+class _FilterByCategoryState extends State<FilterByCategory> {
   @override
   void initState() {
     super.initState();
     ticketBloc.fetchAllTickets();
-    categoriesBloc.readCategoriesJson();
   }
 
   final ticketBloc = TicketBloc();
-  final categoriesBloc = CategoriesBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -42,52 +40,12 @@ class _OverviewPageState extends State<OverviewPage> {
             child: ListView(
               shrinkWrap: true,
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    "Categories",
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
-                  ),
-                ),
-                StreamBuilder<List<dynamic>>(
-                    stream: categoriesBloc.categories,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot.hasError) {
-                        return const Center(
-                          child: Text("Error"),
-                        );
-                      }
-                      return CarouselSlider(
-                        options: CarouselOptions(height: 220),
-                        items: snapshot.data!
-                            .map((e) => InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                FilterByCategory(
-                                                  category: e['category'],
-                                                )));
-                                  },
-                                  child: CategoryCard(
-                                    category: e['category'],
-                                    imageUrl: e['imageUrl'],
-                                  ),
-                                ))
-                            .toList(),
-                      );
-                    }),
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    "All items",
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
+                    "Filter by ${widget.category}",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w900, fontSize: 20),
                   ),
                 ),
                 StreamBuilder<List<TicketModel>>(
@@ -107,6 +65,10 @@ class _OverviewPageState extends State<OverviewPage> {
                         spacing: 5,
                         runSpacing: 5,
                         children: snapshot.data!
+                            .where((element) =>
+                                element.category == widget.category ||
+                                element.category ==
+                                    widget.category.toLowerCase())
                             .map((e) => InkWell(
                                   onTap: () => {
                                     Navigator.push(

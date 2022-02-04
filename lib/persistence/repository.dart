@@ -6,4 +6,7 @@ class Repository {
 
   Future<List<TicketModel>> fetchAllTickets() =>
       appApiProvider.fetchAllTickets();
+
+  Future<List<dynamic>> readCategoriesJson() =>
+      appApiProvider.readCategoriesJson();
 }

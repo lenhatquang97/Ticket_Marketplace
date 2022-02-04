@@ -46,7 +46,7 @@ class ItemCard extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 2,
-                      child: Text(model.data.name,
+                      child: Text(model.name,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18)),
                     ),
@@ -56,7 +56,7 @@ class ItemCard extends StatelessWidget {
                     Chip(
                       backgroundColor: blueCustom,
                       label: Text(
-                        model.data.category,
+                        model.category,
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
@@ -66,7 +66,7 @@ class ItemCard extends StatelessWidget {
                     IconWithText(
                         icon: Icons.place,
                         color: Colors.red,
-                        text: model.data.location),
+                        text: model.location),
                   ],
                 ),
               ),
