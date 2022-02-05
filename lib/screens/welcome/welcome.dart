@@ -30,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
               "Create new wallet or import your wallet",
             ),
             Expanded(
-              child: Lottie.asset("assets/wallet.json"),
+              child: Lottie.asset("assets/lottie_anim/wallet.json"),
             ),
             InkWell(
                 onTap: () {

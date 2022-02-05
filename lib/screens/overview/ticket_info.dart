@@ -1,14 +1,23 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/constants/sample_data.dart';
+import 'package:ticket_marketplace/models/ticket_model.dart';
+import 'package:ticket_marketplace/persistence/repository.dart';
+import 'package:ticket_marketplace/screens/home_page.dart';
+import 'package:ticket_marketplace/screens/profile/confirm_sharing.dart';
+import 'package:ticket_marketplace/utils/user_storage.dart';
+import 'package:ticket_marketplace/utils/wallet.dart';
 import 'package:ticket_marketplace/widgets/custom_expansion_panel.dart';
 import 'package:ticket_marketplace/widgets/from_to_history.dart';
-import 'package:ticket_marketplace/widgets/icon_with_text.dart';
+import 'package:ticket_marketplace/widgets/icon_with_text_custom.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TicketInfo extends StatefulWidget {
-  const TicketInfo({Key? key}) : super(key: key);
+  final TicketModel model;
+  const TicketInfo({Key? key, required this.model}) : super(key: key);
 
   @override
   State<TicketInfo> createState() => _TicketInfoState();
@@ -16,6 +25,17 @@ class TicketInfo extends StatefulWidget {
 
 class _TicketInfoState extends State<TicketInfo> {
   var stateExpand = [false, false, false];
+  Completer<GoogleMapController> _controller = Completer();
+  static final CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
+
+  static final CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,42 +46,49 @@ class _TicketInfoState extends State<TicketInfo> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Hero(
-                  tag: 'test1',
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      side: const BorderSide(
-                        color: Colors.grey,
-                        width: 1.0,
-                      ),
-                    ),
-                    child: Image.network(
-                      sampleImgUrl,
-                    ),
-                  ),
-                ),
+                FutureBuilder<String>(
+                    future: Repository().getImageLink(widget.model.ticketId),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const CircularProgressIndicator();
+                      }
+                      if (snapshot.hasError) {
+                        return const Icon(Icons.error);
+                      }
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          side: const BorderSide(
+                            color: Colors.grey,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Image.network(
+                          snapshot.data!,
+                        ),
+                      );
+                    }),
                 const SizedBox(
                   height: 10,
                 ),
-                const Chip(
+                Chip(
                   backgroundColor: blueCustom,
                   label: Text(
-                    "Concert",
-                    style: TextStyle(color: Colors.white),
+                    widget.model.category,
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  child: Text("Flirty Bears #0001",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: Text(widget.model.name,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20)),
                 ),
-                const Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 10),
-                    child: IconWithText(
+                Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: IconWithTextCustom(
                       icon: Icons.place,
-                      text: "1st District, Ho Chi Minh City",
+                      text: widget.model.location,
                       color: Colors.red,
                     )),
                 const SizedBox(height: 10),
@@ -74,7 +101,32 @@ class _TicketInfoState extends State<TicketInfo> {
                           end: Alignment.bottomCenter,
                           colors: blueGradient)),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      final repo = Repository();
+                      final address = await SecureStorage.readSecureData(
+                          SecureStorage.publicKey);
+                      final resultCode = await repo.buyfromStore(
+                          widget.model.ticketId, address);
+                      if (resultCode == 200) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Buy successfully"),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Buy failed"),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 15, bottom: 15),
                       child: Row(
@@ -112,10 +164,16 @@ class _TicketInfoState extends State<TicketInfo> {
                                   fontWeight: FontWeight.bold, fontSize: 20)),
                         );
                       },
-                      body: const Padding(
-                        padding:
-                            EdgeInsets.only(top: 10, right: 10, bottom: 10),
-                        child: Text("Sample", style: TextStyle(fontSize: 20)),
+                      body: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 10, right: 10, bottom: 10),
+                        child: GoogleMap(
+                          mapType: MapType.terrain,
+                          initialCameraPosition: _kGooglePlex,
+                          onMapCreated: (GoogleMapController controller) {
+                            _controller.complete(controller);
+                          },
+                        ),
                       ),
                     ),
                     ExpansionPanel(
@@ -130,11 +188,11 @@ class _TicketInfoState extends State<TicketInfo> {
                                   fontWeight: FontWeight.bold, fontSize: 20)),
                         );
                       },
-                      body: const Padding(
-                        padding:
-                            EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      body: Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 20, left: 20, right: 20),
                         child: Text(
-                          "He ordered his regular breakfast. Two eggs sunnyside up, hash browns, and two strips of bacon. He continued to look at the menu wondering if this would be the day he added something new. This was also part of the routine. A few seconds of hesitation to see if something else would be added to the order before demuring and saying that would be all. It was the same exact meal that he had ordered every day for the past two years.",
+                          widget.model.description,
                           textAlign: TextAlign.justify,
                         ),
                       ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class IconWithText extends StatelessWidget {
+class IconWithTextCustom extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String text;
   final double fontSize;
-  const IconWithText(
+  const IconWithTextCustom(
       {Key? key,
       required this.icon,
       required this.text,
@@ -24,10 +24,10 @@ class IconWithText extends StatelessWidget {
           color: color,
         ),
         const SizedBox(width: 5),
-        SizedBox(
-          width: MediaQuery.of(context).size.width / 2 - 20,
+        Flexible(
           child: Text(
             text,
+            maxLines: 4,
             style: TextStyle(fontSize: fontSize),
           ),
         ),

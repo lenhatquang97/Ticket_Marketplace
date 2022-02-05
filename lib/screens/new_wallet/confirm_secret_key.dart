@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ticket_marketplace/models/wallet.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
