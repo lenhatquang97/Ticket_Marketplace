@@ -44,8 +44,9 @@ class MyApp extends StatelessWidget {
             primaryColor: backgroundColor,
             primarySwatch: buildMaterialColor(blueCustom),
             fontFamily: GoogleFonts.lato().fontFamily),
-        home: (flag != null) ? const HomePage() : const WelcomeScreen(),
+        home: (flag == null) ? const HomePage() : const WelcomeScreen(),
       ),
     );
   }
 }
+//flag != null is right
