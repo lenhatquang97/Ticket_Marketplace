@@ -7,6 +7,7 @@ import 'package:ticket_marketplace/provider/manage_page_screen.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
 import 'package:provider/provider.dart';
 import 'package:ticket_marketplace/utils/color_func.dart';
+import 'package:ticket_marketplace/utils/user_storage.dart';
 import 'package:ticket_marketplace/utils/wallet.dart';
 
 import 'screens/welcome/welcome.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
             primaryColor: backgroundColor,
             primarySwatch: buildMaterialColor(blueCustom),
             fontFamily: GoogleFonts.lato().fontFamily),
-        home: const WelcomeScreen(),
+        home: (SecureStorage.readSecureData(SecureStorage.privateKeyHashed) != null)?const HomePage():const WelcomeScreen(),
       ),
     );
   }
