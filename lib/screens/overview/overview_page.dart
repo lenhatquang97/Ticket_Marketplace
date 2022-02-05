@@ -6,6 +6,7 @@ import 'package:ticket_marketplace/bloc/categories_bloc.dart';
 import 'package:ticket_marketplace/bloc/ticket_bloc.dart';
 import 'package:ticket_marketplace/constants/sample_data.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
+import 'package:ticket_marketplace/persistence/repository.dart';
 import 'package:ticket_marketplace/screens/overview/item_filter_by_category.dart';
 import 'package:ticket_marketplace/screens/overview/ticket_info.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
@@ -116,10 +117,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                                   model: e,
                                                 )))
                                   },
-                                  child: ItemCard(
-                                    model: e,
-                                    imageUrl: sampleImgUrl,
-                                  ),
+                                  child: ItemCard(model: e),
                                 ))
                             .toList(),
                       );

@@ -73,10 +73,7 @@ class _FilterByCategoryState extends State<FilterByCategory> {
                                                   model: e,
                                                 )))
                                   },
-                                  child: ItemCard(
-                                    model: e,
-                                    imageUrl: sampleImgUrl,
-                                  ),
+                                  child: ItemCard(model: e),
                                 ))
                             .toList(),
                       );

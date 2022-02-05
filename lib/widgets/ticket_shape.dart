@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
-import 'package:ticket_marketplace/constants/sample_data.dart';
+import 'package:ticket_marketplace/models/my_ticket_model.dart';
 import 'package:ticket_marketplace/persistence/repository.dart';
+import 'package:ticket_marketplace/screens/home_page.dart';
 import 'package:ticket_marketplace/screens/profile/confirm_sharing.dart';
-import 'package:ticket_marketplace/screens/qr_share/qr_share_screen.dart';
+import 'package:ticket_marketplace/utils/date_time_func.dart';
 import 'package:ticket_marketplace/utils/wallet.dart';
 import 'package:ticket_marketplace/widgets/dashed_line.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 
 class Ticket extends StatelessWidget {
+  final MyTicketModel model;
   final double margin;
   final double borderRadius;
   final double clipRadius;
@@ -19,6 +21,7 @@ class Ticket extends StatelessWidget {
 
   const Ticket({
     Key? key,
+    required this.model,
     this.margin = 10,
     this.borderRadius = 10,
     this.clipRadius = 12.5,
@@ -30,10 +33,6 @@ class Ticket extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     final ticketWidth = screenSize.width;
     final ticketHeight = screenSize.height - margin * 4;
-
-    //Hard-code
-    final txOutId =
-        "6b41233c12091924c8ae9cdaa70b3cf13850a26808ecaed03aca26016ebdf83d";
     return Container(
       width: ticketWidth,
       height: ticketHeight,
@@ -65,14 +64,14 @@ class Ticket extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Flirty Bears",
+                    model.data.name,
                     style: blackColorFont.copyWith(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: blueCustom),
                   ),
                   const SizedBox(height: 5),
-                  const Text("Ho Chi Minh City, Vietnam", style: blackColorFont)
+                  Text(model.data.location, style: blackColorFont)
                 ],
               ),
               const SizedBox(height: 5),
@@ -88,13 +87,17 @@ class Ticket extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        "12:00 PM",
+                        getTime(model.data.start.contains('-')
+                            ? DateTime.parse(model.data.start)
+                            : DateTime.now()),
                         style: blackColorFont.copyWith(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        "21/10/2022",
+                        getDate(model.data.start.contains('-')
+                            ? DateTime.parse(model.data.start)
+                            : DateTime.now()),
                         style: blackColorFont.copyWith(
                             color: Colors.grey, fontWeight: FontWeight.bold),
                       ),
@@ -115,13 +118,17 @@ class Ticket extends StatelessWidget {
                               color: Colors.grey, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 5),
                       Text(
-                        "5:00 PM",
+                        getTime(model.data.end.contains('-')
+                            ? DateTime.parse(model.data.end)
+                            : DateTime.now()),
                         style: blackColorFont.copyWith(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        "23/10/2022",
+                        getDate(model.data.end.contains('-')
+                            ? DateTime.parse(model.data.end)
+                            : DateTime.now()),
                         style: blackColorFont.copyWith(
                             color: Colors.grey, fontWeight: FontWeight.bold),
                       ),
@@ -129,21 +136,35 @@ class Ticket extends StatelessWidget {
                   ),
                 ],
               ),
-              Expanded(
-                child: Center(
-                  child: Image.network(
-                    sampleImgUrl,
-                    width: ticketWidth,
-                    height: ticketHeight / 3,
-                  ),
-                ),
-              ),
+              FutureBuilder<String>(
+                  future: Repository().getImageLink(model.data.ticketId),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text('Error'),
+                      );
+                    }
+                    return Expanded(
+                      child: Center(
+                        child: Image.network(
+                          snapshot.data!,
+                          width: ticketWidth,
+                          height: ticketHeight / 3,
+                        ),
+                      ),
+                    );
+                  }),
               const MySeparator(),
               const SizedBox(height: 10),
               Expanded(
                 child: Center(
                   child: QrImage(
-                    data: "flirtybears.com",
+                    data: model.data.ticketId,
                     version: QrVersions.auto,
                     size: ticketWidth / 2,
                   ),
@@ -166,11 +187,15 @@ class Ticket extends StatelessWidget {
                             builder: (context) => ConfirmSharing()),
                       );
                       if (password != null) {
-                        final signaturer = await SignMsg(txOutId, password);
+                        final signaturer = await SignMsg(model.txid, password);
                         final repo = Repository();
                         final resultCode = await repo.createTransactionFunc(
-                            txOutId, result.rawContent, signaturer);
+                            model.txid, result.rawContent, signaturer);
                         if (resultCode == 200) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()));
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Transaction created successfully"),
