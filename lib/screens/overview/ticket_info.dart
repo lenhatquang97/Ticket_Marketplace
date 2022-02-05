@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/constants/sample_data.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
+import 'package:ticket_marketplace/persistence/repository.dart';
+import 'package:ticket_marketplace/utils/user_storage.dart';
 import 'package:ticket_marketplace/widgets/custom_expansion_panel.dart';
 import 'package:ticket_marketplace/widgets/from_to_history.dart';
 import 'package:ticket_marketplace/widgets/icon_with_text_custom.dart';
@@ -72,7 +74,16 @@ class _TicketInfoState extends State<TicketInfo> {
                           end: Alignment.bottomCenter,
                           colors: blueGradient)),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      final repo = Repository();
+                      final address = await SecureStorage.readSecureData(
+                          SecureStorage.publicKey);
+                      final result = await repo.buyfromStore(
+                          widget.model.ticketId, address);
+                      if (result == 200) {
+                        print("Success");
+                      }
+                    },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 15, bottom: 15),
                       child: Row(

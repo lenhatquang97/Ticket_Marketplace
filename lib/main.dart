@@ -13,11 +13,16 @@ import 'package:ticket_marketplace/utils/wallet.dart';
 import 'screens/welcome/welcome.dart';
 
 Future<void> main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  final flag = await SecureStorage.readSecureData("privateKey");
+  runApp(MyApp(
+    flag: flag,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  String? flag;
+  MyApp({Key? key, this.flag}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -42,9 +47,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: buildMaterialColor(blueCustom),
             fontFamily: GoogleFonts.lato().fontFamily),
         // ignore: unnecessary_null_comparison
-        home: SecureStorage.readSecureData("privateKey") == null
-            ? const WelcomeScreen()
-            : const HomePage(),
+        home: flag == null ? const WelcomeScreen() : const HomePage(),
       ),
     );
   }

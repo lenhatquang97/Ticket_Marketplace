@@ -21,4 +21,14 @@ class ApiProvider {
     final data = await jsonDecode(response);
     return data;
   }
+
+  Future<int> buyfromStore(String ticketId, String address) async {
+    final response = await http.patch(Uri.parse(getAllTickets),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+            <String, String>{'ticketId': ticketId, 'address': address}));
+    return response.statusCode;
+  }
 }

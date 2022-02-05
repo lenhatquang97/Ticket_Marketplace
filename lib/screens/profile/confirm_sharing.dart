@@ -3,6 +3,7 @@ import 'package:ecdsa/src/signature.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ticket_marketplace/constants/api_constants.dart';
+import 'package:ticket_marketplace/screens/new_wallet/new_wallet.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,35 +11,47 @@ class ConfirmSharing extends StatelessWidget {
   final String receiverPublicId;
   final String txOutId;
   final Signature signaturer;
-  const ConfirmSharing(
+  ConfirmSharing(
       {Key? key,
       required this.receiverPublicId,
       required this.txOutId,
       required this.signaturer})
       : super(key: key);
+  final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff101018),
       appBar: CustomAppbar(),
-      body: SizedBox(
-        width: double.infinity,
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
-              height: 30,
+              height: 50,
             ),
             const Text(
-              "Confirm your transaction",
+              "Confirm your activity",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const Text(
-              "Do you want to transfer to another account?",
+              "Do you want to confirm your activity?",
             ),
-            Expanded(
-              child: Lottie.asset("assets/lottie_anim/confirmation.json"),
+            Lottie.asset("assets/lottie_anim/confirmation.json"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: PasswordField(
+                onChanged: (val) {},
+                controller: controller,
+                lable: "Password",
+                validator: (value) {
+                  return null;
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 30,
             ),
             InkWell(
               onTap: () async {
@@ -52,10 +65,11 @@ class ConfirmSharing extends StatelessWidget {
                       'signature': signaturer.toString()
                     }));
                 if (send.statusCode == 200) {
-                  Navigator.pop(context);
+                  Navigator.pop(context, "Yes");
                 } else {
                   print(send.body);
                   print("Oh no!!");
+                  Navigator.pop(context, "No");
                 }
               },
               child: Container(
@@ -67,37 +81,12 @@ class ConfirmSharing extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     child: Center(
                         child: Text(
-                      "Yes",
+                      "Confirm",
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     )),
                   )),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Theme.of(context).secondaryHeaderColor),
-                      borderRadius: BorderRadius.circular(29)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
-                    child: Center(
-                        child: Text(
-                      "No",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).secondaryHeaderColor),
-                    )),
-                  ),
-                )),
             const SizedBox(
               height: 100,
             ),

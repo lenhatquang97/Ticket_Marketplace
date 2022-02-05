@@ -9,4 +9,7 @@ class Repository {
 
   Future<List<dynamic>> readCategoriesJson() =>
       appApiProvider.readCategoriesJson();
+
+  Future<int> buyfromStore(String ticketId, String address) =>
+      appApiProvider.buyfromStore(ticketId, address);
 }
