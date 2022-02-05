@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:ticket_marketplace/screens/import_wallet/import_wallet.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
 
 import '../new_wallet/new_wallet.dart';
@@ -32,24 +33,28 @@ class WelcomeScreen extends StatelessWidget {
               child: Lottie.asset("assets/wallet.json"),
             ),
             InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ImportWallet()));
+                },
                 child: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              decoration: BoxDecoration(
-                  border:
-                      Border.all(color: Theme.of(context).secondaryHeaderColor),
-                  borderRadius: BorderRadius.circular(29)),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: Center(
-                    child: Text(
-                  "Import Wallet",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).secondaryHeaderColor),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).secondaryHeaderColor),
+                      borderRadius: BorderRadius.circular(29)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    child: Center(
+                        child: Text(
+                      "Import Wallet",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).secondaryHeaderColor),
+                    )),
+                  ),
                 )),
-              ),
-            )),
             const SizedBox(
               height: 20,
             ),

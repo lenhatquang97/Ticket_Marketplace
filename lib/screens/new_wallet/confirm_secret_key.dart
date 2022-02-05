@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_marketplace/models/wallet.dart';
+import 'package:ticket_marketplace/screens/home_page.dart';
+import 'package:ticket_marketplace/utils/user_storage.dart';
 import 'package:ticket_marketplace/utils/wallet.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
 
@@ -74,16 +76,16 @@ class _ConfirmSecretKeyState extends State<ConfirmSecretKey> {
           Expanded(child: Container()),
           InkWell(
             onTap: () {
-              final temp = EncryptPrivateKey(
-                  widget.wallet.privateKey, widget.password);
-              DecryptPrivateKey(temp, widget.password);
-
               if (formKey.currentState!.validate()) {
-                print(EncryptPrivateKey(widget.wallet.privateKey, widget.password));
+                final temp = EncryptPrivateKey(
+                    widget.wallet.privateKey, widget.password);
+                SecureStorage.writeSecureData(
+                    SecureStorage.privateKeyHashed, temp);
+                SecureStorage.writeSecureData(
+                    SecureStorage.publicKey, widget.wallet.publicKey);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const HomePage()));
               }
-
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => ConfirmSecretKey(password: widget.password, wallet: wallet,)));
             },
             child: Container(
                 width: MediaQuery.of(context).size.width * 0.8,

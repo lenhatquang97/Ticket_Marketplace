@@ -2,6 +2,7 @@ import 'package:ecdsa/ecdsa.dart';
 import 'package:elliptic/elliptic.dart';
 import 'dart:convert' show utf8;
 import 'package:crypto/crypto.dart';
+import 'package:flutter/services.dart';
 import 'package:ticket_marketplace/models/wallet.dart';
 import 'dart:convert';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -18,7 +19,7 @@ String GetPriavteKey(String hashedPrivateKey, String password) {
   return hashedPrivateKey;
 }
 
-encrypt.Encrypted EncryptPrivateKey(String privateKey, String password) {
+String EncryptPrivateKey(String privateKey, String password) {
   while (password.length < 32) {
     password = password + 'k';
   }
@@ -26,22 +27,18 @@ encrypt.Encrypted EncryptPrivateKey(String privateKey, String password) {
   final fernet = encrypt.Fernet(keyFernet);
   final encrypter = encrypt.Encrypter(fernet);
   final encrypted = encrypter.encrypt(privateKey);
-  print(encrypted.bytes.toString());
-  return encrypted;
+  return base64Encode(encrypted.bytes);
 }
 
-String DecryptPrivateKey(hashedPrivateKey, String password) {
+String DecryptPrivateKey(String encodedPrivateKey, String password) {
   while (password.length < 32) {
     password = password + 'k';
   }
+  final encryptedKey = encrypt.Encrypted.from64(encodedPrivateKey);
   final keyFernet = encrypt.Key.fromUtf8(password);
   final fernet = encrypt.Fernet(keyFernet);
   final encrypter = encrypt.Encrypter(fernet);
-  final decrypted = encrypter.decrypt(hashedPrivateKey);
+  final decrypted = encrypter.decrypt(encryptedKey);
 
   return decrypted.toString();
 }
-
-// String Signature(String hashedMsg, String password) {
-
-// }
