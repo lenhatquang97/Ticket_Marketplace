@@ -48,6 +48,11 @@ class ProfilePage extends StatelessWidget {
               text: "About",
               onPressed: () {},
             ),
+            FieldButton(
+              icon: FontAwesomeIcons.doorOpen,
+              text: "Sign out",
+              onPressed: () {},
+            ),
           ],
         ),
       )),
