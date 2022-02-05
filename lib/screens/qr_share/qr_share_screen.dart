@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrShareScreen extends StatelessWidget {
-  const QrShareScreen({Key? key}) : super(key: key);
-
+  final String publicKey;
+  const QrShareScreen({Key? key, required this.publicKey}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,23 +16,30 @@ class QrShareScreen extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.all(10.0),
               child: Text(
-                "Share your ticket",
+                "Share your public key",
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20),
               ),
             ),
             const Padding(
               padding: EdgeInsets.all(10.0),
               child: Text(
-                "Share your ticket with your friends and family only through scanning your QR ticket code",
+                "Share your public key for transferring tickets and other assets",
                 textAlign: TextAlign.center,
               ),
             ),
-            const Spacer(),
+            const Text("Your public key:"),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                publicKey,
+                textAlign: TextAlign.justify,
+              ),
+            ),
             Center(
               child: Container(
                 color: Colors.white,
                 child: QrImage(
-                  data: "10202",
+                  data: publicKey,
                   version: QrVersions.auto,
                   size: MediaQuery.of(context).size.width - 40,
                 ),

@@ -56,6 +56,8 @@ class _ShowSecretKeyState extends State<ShowSecretKey> {
           Expanded(child: Container()),
           InkWell(
             onTap: () {
+              print("Private key: ${wallet.privateKey}");
+              print("Public key: ${wallet.publicKey}");
               Clipboard.setData(ClipboardData(text: recoverKey));
             },
             child: Container(

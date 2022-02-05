@@ -3,8 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/constants/sample_data.dart';
-import 'package:ticket_marketplace/screens/profile/qr_share_screen.dart';
+import 'package:ticket_marketplace/persistence/repository.dart';
+import 'package:ticket_marketplace/screens/profile/confirm_sharing.dart';
+import 'package:ticket_marketplace/screens/qr_share/qr_share_screen.dart';
+import 'package:ticket_marketplace/utils/wallet.dart';
 import 'package:ticket_marketplace/widgets/dashed_line.dart';
+import 'package:barcode_scan2/barcode_scan2.dart';
 
 class Ticket extends StatelessWidget {
   final double margin;
@@ -26,6 +30,10 @@ class Ticket extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     final ticketWidth = screenSize.width;
     final ticketHeight = screenSize.height - margin * 4;
+
+    //Hard-code
+    final txOutId =
+        "6b41233c12091924c8ae9cdaa70b3cf13850a26808ecaed03aca26016ebdf83d";
     return Container(
       width: ticketWidth,
       height: ticketHeight,
@@ -149,11 +157,36 @@ class Ticket extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10), color: blueCustom),
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    var result = await BarcodeScanner.scan();
+                    if (result.type == ResultType.Barcode) {
+                      final password = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => QrShareScreen()));
+                            builder: (context) => ConfirmSharing()),
+                      );
+                      if (password != null) {
+                        final signaturer = await SignMsg(txOutId, password);
+                        final repo = Repository();
+                        final resultCode = await repo.createTransactionFunc(
+                            txOutId, result.rawContent, signaturer);
+                        if (resultCode == 200) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Transaction created successfully"),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Transaction failed"),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                      }
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
