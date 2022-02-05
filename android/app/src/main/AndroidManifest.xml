@@ -6,6 +6,8 @@
         android:label="ticket_marketplace"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBvMAIP0Mh4N5OP7gnToExgO4u1vn3y7po"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

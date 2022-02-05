@@ -65,6 +65,9 @@ class _ImportWalletState extends State<ImportWallet> {
                       return null;
                     },
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   PasswordField(
                     onChanged: (val) {
                       setState(() {
@@ -79,6 +82,19 @@ class _ImportWalletState extends State<ImportWallet> {
                       }
                       return null;
                     },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    child: Row(
+                      children: [
+                        const Text("Strength:"),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(child: PasswordIndicator(pwd: tmpPwd))
+                      ],
+                    ),
                   ),
                   PasswordField(
                     lable: "Confirm Password",
