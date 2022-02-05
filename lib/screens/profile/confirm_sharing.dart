@@ -6,6 +6,7 @@ import 'package:ticket_marketplace/constants/api_constants.dart';
 import 'package:ticket_marketplace/screens/new_wallet/new_wallet.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
 import 'package:http/http.dart' as http;
+import 'package:ticket_marketplace/widgets/password_field.dart';
 
 class ConfirmSharing extends StatelessWidget {
   final String receiverPublicId;

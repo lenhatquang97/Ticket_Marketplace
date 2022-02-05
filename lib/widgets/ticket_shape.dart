@@ -159,16 +159,16 @@ class Ticket extends StatelessWidget {
                   onTap: () async {
                     var result = await BarcodeScanner.scan();
                     if (result.type == ResultType.Barcode) {
-                      final signaturer = await SignMsg(txOutId);
-                      print(result.rawContent);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ConfirmSharing(
-                                receiverPublicId: result.rawContent,
-                                txOutId: txOutId,
-                                signaturer: signaturer)),
-                      );
+                      // final signaturer = "await SignMsg(txOutId);";
+                      // print(result.rawContent);
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => ConfirmSharing(
+                      //           receiverPublicId: result.rawContent,
+                      //           txOutId: txOutId,
+                      //           signaturer: signaturer)),
+                      // );
                     }
                   },
                   child: Padding(

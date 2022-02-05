@@ -78,20 +78,16 @@ class _ConfirmSecretKeyState extends State<ConfirmSecretKey> {
           Expanded(child: Container()),
           InkWell(
             onTap: () {
-              final temp =
-                  EncryptPrivateKey(widget.wallet.privateKey, widget.password);
-              DecryptPrivateKey(temp, widget.password);
-
               if (formKey.currentState!.validate()) {
-                final val = EncryptPrivateKey(
+                final temp = EncryptPrivateKey(
                     widget.wallet.privateKey, widget.password);
-                SecureStorage.writeSecureData("privateKey", val.base64);
+                SecureStorage.writeSecureData(
+                    SecureStorage.privateKeyHashed, temp);
+                SecureStorage.writeSecureData(
+                    SecureStorage.publicKey, widget.wallet.publicKey);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const HomePage()));
               }
-
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => ConfirmSecretKey(password: widget.password, wallet: wallet,)));
             },
             child: Container(
                 width: MediaQuery.of(context).size.width * 0.8,

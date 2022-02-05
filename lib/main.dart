@@ -14,7 +14,8 @@ import 'screens/welcome/welcome.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final flag = await SecureStorage.readSecureData("privateKey");
+  final flag =
+      await SecureStorage.readSecureData(SecureStorage.privateKeyHashed);
   runApp(MyApp(
     flag: flag,
   ));
@@ -46,8 +47,7 @@ class MyApp extends StatelessWidget {
             primaryColor: backgroundColor,
             primarySwatch: buildMaterialColor(blueCustom),
             fontFamily: GoogleFonts.lato().fontFamily),
-        // ignore: unnecessary_null_comparison
-        home: flag == null ? const WelcomeScreen() : const HomePage(),
+        home: (flag != null) ? const HomePage() : const WelcomeScreen(),
       ),
     );
   }
