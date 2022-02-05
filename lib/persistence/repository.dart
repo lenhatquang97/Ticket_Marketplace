@@ -1,4 +1,5 @@
 import 'package:ecdsa/ecdsa.dart';
+import 'package:ticket_marketplace/models/my_ticket_model.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
 import 'api_provider.dart';
 
@@ -18,6 +19,8 @@ class Repository {
           String txOutId, String receiverPublicId, Signature signaturer) =>
       appApiProvider.createTransactionFunc(
           txOutId, receiverPublicId, signaturer);
-  Future<List<TicketModel>> fetchOwnTickets() =>
+  Future<List<MyTicketModel>> fetchOwnTickets() =>
       appApiProvider.fetchOwnTickets();
+  Future<String> getImageLink(String ticketId) =>
+      appApiProvider.getImageLink(ticketId);
 }
