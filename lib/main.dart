@@ -13,11 +13,17 @@ import 'package:ticket_marketplace/utils/wallet.dart';
 import 'screens/welcome/welcome.dart';
 
 Future<void> main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  final flag =
+      await SecureStorage.readSecureData(SecureStorage.privateKeyHashed);
+  runApp(MyApp(
+    flag: flag,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  String? flag;
+  MyApp({Key? key, this.flag}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -27,7 +33,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PageChange()),
       ],
       child: MaterialApp(
-
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -42,7 +47,7 @@ class MyApp extends StatelessWidget {
             primaryColor: backgroundColor,
             primarySwatch: buildMaterialColor(blueCustom),
             fontFamily: GoogleFonts.lato().fontFamily),
-        home: (SecureStorage.readSecureData(SecureStorage.privateKeyHashed) != null)?const HomePage():const WelcomeScreen(),
+        home: (flag != null) ? const HomePage() : const WelcomeScreen(),
       ),
     );
   }
