@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/constants/sample_data.dart';
+import 'package:ticket_marketplace/persistence/repository.dart';
 import 'package:ticket_marketplace/screens/profile/confirm_sharing.dart';
 import 'package:ticket_marketplace/screens/qr_share/qr_share_screen.dart';
 import 'package:ticket_marketplace/utils/wallet.dart';
@@ -32,7 +33,7 @@ class Ticket extends StatelessWidget {
 
     //Hard-code
     final txOutId =
-        "609d2edf125ea7ca6459a9aff93bd7085d3fd508506d3b84dd504e64d330653f";
+        "6b41233c12091924c8ae9cdaa70b3cf13850a26808ecaed03aca26016ebdf83d";
     return Container(
       width: ticketWidth,
       height: ticketHeight,
@@ -159,16 +160,32 @@ class Ticket extends StatelessWidget {
                   onTap: () async {
                     var result = await BarcodeScanner.scan();
                     if (result.type == ResultType.Barcode) {
-                      // final signaturer = "await SignMsg(txOutId);";
-                      // print(result.rawContent);
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => ConfirmSharing(
-                      //           receiverPublicId: result.rawContent,
-                      //           txOutId: txOutId,
-                      //           signaturer: signaturer)),
-                      // );
+                      final password = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ConfirmSharing()),
+                      );
+                      if (password != null) {
+                        final signaturer = await SignMsg(txOutId, password);
+                        final repo = Repository();
+                        final resultCode = await repo.createTransactionFunc(
+                            txOutId, result.rawContent, signaturer);
+                        if (resultCode == 200) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Transaction created successfully"),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Transaction failed"),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                      }
                     }
                   },
                   child: Padding(

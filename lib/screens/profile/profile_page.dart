@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
 import 'package:ticket_marketplace/screens/profile/your_ticket.dart';
 import 'package:ticket_marketplace/screens/qr_share/qr_share_screen.dart';
+import 'package:ticket_marketplace/utils/user_storage.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
 import 'package:ticket_marketplace/widgets/profile/field_button.dart';
 
@@ -44,9 +45,13 @@ class ProfilePage extends StatelessWidget {
             FieldButton(
               icon: FontAwesomeIcons.qrcode,
               text: "Share your QR Code",
-              onPressed: () {
+              onPressed: () async {
+                final publicKey =
+                    await SecureStorage.readSecureData(SecureStorage.publicKey);
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const QrShareScreen();
+                  return QrShareScreen(
+                    publicKey: publicKey,
+                  );
                 }));
               },
             ),

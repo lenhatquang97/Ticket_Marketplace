@@ -43,3 +43,19 @@ String DecryptPrivateKey(String encodedPrivateKey, String password) {
 
   return decrypted.toString();
 }
+
+Future<Signature> SignMsg(String msg, String password) async {
+  var msgEncoded = utf8.encode(msg);
+  var msgHash = sha256.convert(msgEncoded).toString();
+
+  // convert to buffer
+  var hash = List<int>.generate(msgHash.length ~/ 2,
+      (i) => int.parse(msgHash.substring(i * 2, i * 2 + 2), radix: 16));
+
+  // sign
+  final privHashed =
+      await SecureStorage.readSecureData(SecureStorage.privateKeyHashed);
+  final priv = DecryptPrivateKey(privHashed, password);
+  var sign = signature(PrivateKey.fromHex(getP256(), priv), hash);
+  return sign;
+}

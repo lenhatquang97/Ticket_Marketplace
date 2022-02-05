@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrShareScreen extends StatelessWidget {
-  const QrShareScreen({Key? key}) : super(key: key);
-  final String tmpPub =
-      "046f3f9a0c6ca20d526d4414ddb21d2798c3976739310170214a984fc0319588f1d63169f9079af8afc331ed8813e57343440b7a2457004d6d11b43d3f68b5dfca";
+  final String publicKey;
+  const QrShareScreen({Key? key, required this.publicKey}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +31,7 @@ class QrShareScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                tmpPub,
+                publicKey,
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -40,7 +39,7 @@ class QrShareScreen extends StatelessWidget {
               child: Container(
                 color: Colors.white,
                 child: QrImage(
-                  data: tmpPub,
+                  data: publicKey,
                   version: QrVersions.auto,
                   size: MediaQuery.of(context).size.width - 40,
                 ),

@@ -9,15 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:ticket_marketplace/widgets/password_field.dart';
 
 class ConfirmSharing extends StatelessWidget {
-  final String receiverPublicId;
-  final String txOutId;
-  final Signature signaturer;
-  ConfirmSharing(
-      {Key? key,
-      required this.receiverPublicId,
-      required this.txOutId,
-      required this.signaturer})
-      : super(key: key);
+  ConfirmSharing({Key? key}) : super(key: key);
   final controller = TextEditingController();
 
   @override
@@ -56,22 +48,7 @@ class ConfirmSharing extends StatelessWidget {
             ),
             InkWell(
               onTap: () async {
-                final send = await http.post(Uri.parse(createTransaction),
-                    headers: <String, String>{
-                      'Content-Type': 'application/json; charset=UTF-8',
-                    },
-                    body: jsonEncode(<String, String>{
-                      'txOutId': txOutId,
-                      'address': receiverPublicId,
-                      'signature': signaturer.toString()
-                    }));
-                if (send.statusCode == 200) {
-                  Navigator.pop(context, "Yes");
-                } else {
-                  print(send.body);
-                  print("Oh no!!");
-                  Navigator.pop(context, "No");
-                }
+                Navigator.pop(context, controller.text);
               },
               child: Container(
                   width: MediaQuery.of(context).size.width * 0.8,
