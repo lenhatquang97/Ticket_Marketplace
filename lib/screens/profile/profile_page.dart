@@ -38,11 +38,6 @@ class ProfilePage extends StatelessWidget {
               },
             ),
             FieldButton(
-              icon: FontAwesomeIcons.landmark,
-              text: "Landmark recognition",
-              onPressed: () {},
-            ),
-            FieldButton(
               icon: FontAwesomeIcons.qrcode,
               text: "Share your QR Code",
               onPressed: () async {
