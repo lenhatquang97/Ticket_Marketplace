@@ -21,7 +21,7 @@ class _ImportWalletState extends State<ImportWallet> {
   final newPassword = TextEditingController(text: "");
   final confirmPassword = TextEditingController(text: "");
   final secretKeyField = TextEditingController(text: "");
-  static final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   String tmpPwd = "";
 
   @override

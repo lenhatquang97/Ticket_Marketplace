@@ -15,7 +15,7 @@ class NewWallet extends StatefulWidget {
 class _NewWalletState extends State<NewWallet> {
   final newPassword = TextEditingController(text: "");
   final confirmPassword = TextEditingController(text: "");
-  static final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   String tmpPwd = "";
 
   @override
@@ -114,7 +114,7 @@ class _NewWalletState extends State<NewWallet> {
               child: Container(
                   width: MediaQuery.of(context).size.width * 0.8,
                   decoration: BoxDecoration(
-                    color: const Color(0xff2964e3),
+                      color: const Color(0xff2964e3),
                       borderRadius: BorderRadius.circular(29)),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
