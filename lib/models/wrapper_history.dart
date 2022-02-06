@@ -9,8 +9,6 @@ class WrapperHistory {
 String getActionType(int index) {
   if (index == 0) {
     return "Create";
-  } else if (index % 2 == 1) {
-    return "Send";
   }
-  return "Receive";
+  return "Send";
 }

@@ -6,6 +6,7 @@ import 'package:ticket_marketplace/models/my_ticket_model.dart';
 import 'package:ticket_marketplace/persistence/repository.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
 import 'package:ticket_marketplace/screens/profile/confirm_sharing.dart';
+import 'package:ticket_marketplace/screens/profile/show_full_history.dart';
 import 'package:ticket_marketplace/utils/date_time_func.dart';
 import 'package:ticket_marketplace/utils/wallet.dart';
 import 'package:ticket_marketplace/widgets/dashed_line.dart';
@@ -173,6 +174,33 @@ class Ticket extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10), color: blueCustom),
+                child: GestureDetector(
+                  onTap: () async {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ShowFullHistory(
+                                ticketId: model.data.ticketId)));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Show History',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
