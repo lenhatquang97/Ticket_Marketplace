@@ -16,11 +16,11 @@ class NoInternet extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
             const SizedBox(height: 16),
-            RaisedButton(
+            ElevatedButton(
               child: const Text('Try Again'),
               onPressed: () {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                    MaterialPageRoute(builder: (context) => const HomePage()));
               },
             ),
           ],
