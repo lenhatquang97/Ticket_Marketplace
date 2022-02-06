@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_marketplace/bloc/categories_bloc.dart';
 import 'package:ticket_marketplace/bloc/ticket_bloc.dart';
-import 'package:ticket_marketplace/constants/sample_data.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
-import 'package:ticket_marketplace/persistence/repository.dart';
 import 'package:ticket_marketplace/screens/overview/item_filter_by_category.dart';
 import 'package:ticket_marketplace/screens/overview/ticket_info.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';

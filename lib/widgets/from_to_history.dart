@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ticket_marketplace/utils/date_time_func.dart';
 
 class FromToHistory extends StatelessWidget {
-  final String fromWallet;
-  final String toWallet;
-  final String timeStamp;
+  final String actionType;
+  final String address;
+  final String time;
   const FromToHistory(
       {Key? key,
-      required this.fromWallet,
-      required this.toWallet,
-      required this.timeStamp})
+      required this.actionType,
+      required this.address,
+      required this.time})
       : super(key: key);
 
   @override
@@ -26,19 +27,20 @@ class FromToHistory extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            const Text(
-              "Transfer",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              actionType,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const Spacer(),
             Text(
-              timeStamp,
+              getTime(DateTime.fromMillisecondsSinceEpoch(int.parse(time))) +
+                  " in " +
+                  getDate(DateTime.fromMillisecondsSinceEpoch(int.parse(time))),
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
         ),
-        Text("From: $fromWallet"),
-        Text("To: $toWallet"),
+        Text(address),
         const SizedBox(
           height: 10,
         )
