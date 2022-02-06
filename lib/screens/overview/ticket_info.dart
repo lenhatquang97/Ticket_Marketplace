@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ticket_marketplace/bloc/histories_bloc.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
-import 'package:ticket_marketplace/constants/sample_data.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
+import 'package:ticket_marketplace/models/wrapper_history.dart';
+import 'package:ticket_marketplace/persistence/api_provider.dart';
 import 'package:ticket_marketplace/persistence/repository.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
-import 'package:ticket_marketplace/screens/profile/confirm_sharing.dart';
 import 'package:ticket_marketplace/utils/user_storage.dart';
 import 'package:ticket_marketplace/utils/wallet.dart';
 import 'package:ticket_marketplace/widgets/custom_expansion_panel.dart';
@@ -24,18 +25,15 @@ class TicketInfo extends StatefulWidget {
 }
 
 class _TicketInfoState extends State<TicketInfo> {
+  @override
+  void initState() {
+    super.initState();
+    historyBloc.getHistoriesFunc(widget.model.ticketId);
+  }
+
+  final historyBloc = HistoryBloc();
   var stateExpand = [false, false, false];
   Completer<GoogleMapController> _controller = Completer();
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,13 +165,35 @@ class _TicketInfoState extends State<TicketInfo> {
                       body: Padding(
                         padding: const EdgeInsets.only(
                             top: 10, right: 10, bottom: 10),
-                        child: GoogleMap(
-                          mapType: MapType.terrain,
-                          initialCameraPosition: _kGooglePlex,
-                          onMapCreated: (GoogleMapController controller) {
-                            _controller.complete(controller);
-                          },
-                        ),
+                        child: FutureBuilder<Pair>(
+                            future:
+                                Repository().getLocation(widget.model.location),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              if (snapshot.hasError) {
+                                return const Icon(Icons.error);
+                              }
+                              print(LatLng(snapshot.data!.a, snapshot.data!.b));
+                              return SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.25,
+                                height: MediaQuery.of(context).size.height / 2,
+                                child: GoogleMap(
+                                  mapType: MapType.normal,
+                                  initialCameraPosition: CameraPosition(
+                                      target: LatLng(
+                                          snapshot.data!.a, snapshot.data!.b),
+                                      zoom: 14),
+                                  onMapCreated:
+                                      (GoogleMapController controller) {
+                                    _controller.complete(controller);
+                                  },
+                                ),
+                              );
+                            }),
                       ),
                     ),
                     ExpansionPanel(
@@ -209,27 +229,32 @@ class _TicketInfoState extends State<TicketInfo> {
                                   fontWeight: FontWeight.bold, fontSize: 20)),
                         );
                       },
-                      body: Container(
-                        alignment: Alignment.topLeft,
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            FromToHistory(
-                                fromWallet: "0x284845787",
-                                toWallet: "0x188282383",
-                                timeStamp: "28/1/2022"),
-                            FromToHistory(
-                                fromWallet: "0x284845787",
-                                toWallet: "0x188282383",
-                                timeStamp: "28/1/2022"),
-                            FromToHistory(
-                                fromWallet: "0x284845787",
-                                toWallet: "0x188282383",
-                                timeStamp: "28/1/2022")
-                          ],
-                        ),
-                      ),
+                      body: StreamBuilder<List<WrapperHistory>>(
+                          stream: historyBloc.historyStream,
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (snapshot.hasError) {
+                              return const Center(
+                                child: Icon(Icons.error),
+                              );
+                            }
+                            return Container(
+                              alignment: Alignment.topLeft,
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: snapshot.data!
+                                      .map((e) => FromToHistory(
+                                          actionType: e.action,
+                                          address: e.eachHistory.data.address,
+                                          time: e.eachHistory.data.time))
+                                      .toList()),
+                            );
+                          }),
                     ),
                   ],
                 )

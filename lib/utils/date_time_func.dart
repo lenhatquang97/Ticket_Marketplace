@@ -1,11 +1,9 @@
+import 'package:intl/intl.dart';
+
 String getDate(DateTime time) {
-  return time.day.toString() +
-      "/" +
-      time.month.toString() +
-      "/" +
-      time.year.toString();
+  return DateFormat('dd/MM/yyyy').format(time);
 }
 
 String getTime(DateTime time) {
-  return time.hour.toString() + ":" + time.minute.toString();
+  return DateFormat.Hm().format(time);
 }

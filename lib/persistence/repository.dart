@@ -1,6 +1,7 @@
 import 'package:ecdsa/ecdsa.dart';
 import 'package:ticket_marketplace/models/my_ticket_model.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
+import 'package:ticket_marketplace/models/wrapper_history.dart';
 import 'api_provider.dart';
 
 class Repository {
@@ -23,4 +24,8 @@ class Repository {
       appApiProvider.fetchOwnTickets();
   Future<String> getImageLink(String ticketId) =>
       appApiProvider.getImageLink(ticketId);
+  Future<List<WrapperHistory>> getHistoriesFunc(String ticketId) =>
+      appApiProvider.getHistoriesFunc(ticketId);
+  Future<Pair<double, double>> getLocation(String location) =>
+      appApiProvider.getLocation(location);
 }

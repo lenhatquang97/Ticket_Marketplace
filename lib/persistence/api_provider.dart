@@ -3,9 +3,20 @@ import 'package:ecdsa/ecdsa.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:ticket_marketplace/constants/api_constants.dart';
+import 'package:ticket_marketplace/models/each_history_model.dart';
 import 'package:ticket_marketplace/models/my_ticket_model.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
+import 'package:ticket_marketplace/models/wrapper_history.dart';
 import 'package:ticket_marketplace/utils/user_storage.dart';
+import 'package:collection/collection.dart';
+import 'package:geocoding/geocoding.dart';
+
+class Pair<T1, T2> {
+  final T1 a;
+  final T2 b;
+
+  Pair(this.a, this.b);
+}
 
 class ApiProvider {
   Future<List<TicketModel>> fetchAllTickets() async {
@@ -70,5 +81,39 @@ class ApiProvider {
     } else {
       throw Exception('Failed to load ticket');
     }
+  }
+
+  Future<List<WrapperHistory>> getHistoriesFunc(String ticketId) async {
+    final response = await http.get(Uri.parse(getHistories + ticketId));
+    if (response.statusCode == 200) {
+      final val = jsonDecode(response.body) as List<dynamic>;
+      return val
+          .mapIndexed((i, e) => WrapperHistory(
+              action: getActionType(i), eachHistory: EachHistory.fromJson(e)))
+          .toList();
+    } else {
+      throw Exception('Failed to load histories');
+    }
+  }
+
+  Future<Pair<double, double>> getLocation(String location) async {
+    List<Location> locations = await locationFromAddress(location);
+    if (locations.isEmpty) {
+      return Pair(0.0, 0.0);
+    }
+    return Pair(locations[0].latitude, locations[0].longitude);
+    // final fullUrl = textSearchUrl + location + key;
+    // final response = await http.get(Uri.parse(fullUrl));
+    // if (response.statusCode == 200) {
+    //   try {
+    //     final val = jsonDecode(response.body);
+    //     print(val);
+    //     final location = val['results'][0]['geometry']['location'];
+    //     return Pair(location['lat'], location['lng']);
+    //   } catch (e) {
+    //     return Pair(10.762622, 106.660172);
+    //   }
+    // }
+    // return Pair(10.762622, 106.660172);
   }
 }
