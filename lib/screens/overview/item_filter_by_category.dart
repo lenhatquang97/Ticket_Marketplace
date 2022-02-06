@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_marketplace/bloc/ticket_bloc.dart';
 import 'package:ticket_marketplace/models/ticket_model.dart';
 import 'package:ticket_marketplace/screens/overview/ticket_info.dart';
+import 'package:ticket_marketplace/screens/subtile/no_item_available.dart';
 import 'package:ticket_marketplace/widgets/appbar.dart';
 import 'package:ticket_marketplace/widgets/item_card.dart';
 import 'package:http/http.dart' as http;
@@ -55,14 +56,16 @@ class _FilterByCategoryState extends State<FilterByCategory> {
                           child: Text("Error"),
                         );
                       }
+                      final tickets = snapshot.data!.where((element) =>
+                          element.category == widget.category ||
+                          element.category == widget.category.toLowerCase());
+                      if (tickets.isEmpty) {
+                        return const NoItemAvailables();
+                      }
                       return Wrap(
                         spacing: 5,
                         runSpacing: 5,
-                        children: snapshot.data!
-                            .where((element) =>
-                                element.category == widget.category ||
-                                element.category ==
-                                    widget.category.toLowerCase())
+                        children: tickets
                             .map((e) => InkWell(
                                   onTap: () => {
                                     Navigator.push(

@@ -9,6 +9,7 @@ import 'package:ticket_marketplace/models/wrapper_history.dart';
 import 'package:ticket_marketplace/persistence/api_provider.dart';
 import 'package:ticket_marketplace/persistence/repository.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
+import 'package:ticket_marketplace/utils/date_time_func.dart';
 import 'package:ticket_marketplace/utils/user_storage.dart';
 import 'package:ticket_marketplace/utils/wallet.dart';
 import 'package:ticket_marketplace/widgets/custom_expansion_panel.dart';
@@ -81,6 +82,76 @@ class _TicketInfoState extends State<TicketInfo> {
                   child: Text(widget.model.name,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20)),
+                ),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Start",
+                          style: blackColorFont.copyWith(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          getTime(widget.model.start.contains('-')
+                              ? DateTime.parse(widget.model.start)
+                              : DateTime.now()),
+                          style: blackColorFont.copyWith(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          getDate(widget.model.start.contains('-')
+                              ? DateTime.parse(widget.model.start)
+                              : DateTime.now()),
+                          style: blackColorFont.copyWith(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    const FaIcon(
+                      FontAwesomeIcons.ticketAlt,
+                      color: blueCustom,
+                      size: 20,
+                    ),
+                    const Spacer(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("End",
+                            style: blackColorFont.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          getTime(widget.model.end.contains('-')
+                              ? DateTime.parse(widget.model.end)
+                              : DateTime.now()),
+                          style: blackColorFont.copyWith(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          getDate(widget.model.end.contains('-')
+                              ? DateTime.parse(widget.model.end)
+                              : DateTime.now()),
+                          style: blackColorFont.copyWith(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -186,7 +257,7 @@ class _TicketInfoState extends State<TicketInfo> {
                                   initialCameraPosition: CameraPosition(
                                       target: LatLng(
                                           snapshot.data!.a, snapshot.data!.b),
-                                      zoom: 14),
+                                      zoom: 10),
                                   onMapCreated:
                                       (GoogleMapController controller) {
                                     _controller.complete(controller);

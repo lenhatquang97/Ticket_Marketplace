@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_marketplace/bloc/my_ticket_bloc.dart';
 import 'package:ticket_marketplace/models/my_ticket_model.dart';
+import 'package:ticket_marketplace/screens/subtile/no_item_available.dart';
 import 'package:ticket_marketplace/widgets/ticket_shape.dart';
 
 class YourTicket extends StatefulWidget {
@@ -36,9 +37,7 @@ class _YourTicketState extends State<YourTicket> {
                     );
                   }
                   if (snapshot.data!.isEmpty) {
-                    return const Center(
-                      child: Text('No Tickets'),
-                    );
+                    return const NoItemAvailables();
                   }
                   return ListView(
                     scrollDirection: Axis.horizontal,

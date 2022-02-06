@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ticket_marketplace/constants/constants.dart';
+import 'package:ticket_marketplace/provider/connection_check.dart';
 import 'package:ticket_marketplace/provider/manage_page_screen.dart';
 import 'package:ticket_marketplace/screens/home_page.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PageChange()),
+        ChangeNotifierProvider(create: (_) => ConnectionCheck()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
